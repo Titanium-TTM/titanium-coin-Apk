@@ -2,6 +2,13 @@
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Titanium (TTM)</title>
+<script>
+function ttmShow(t){var a=document.getElementById('app')||document.body;a.innerHTML='<pre style="color:#fff;background:#300;white-space:pre-wrap;word-break:break-all;padding:16px;margin:16px;border-radius:10px;font-size:13px">ERROR\n'+String(t).replace(/</g,'&lt;')+'</pre>'}
+window.addEventListener('error',function(e){if(e.target&&e.target!==window&&(e.target.src||e.target.href)){ttmShow('Could not load: '+(e.target.src||e.target.href))}else{ttmShow((e.message||'error')+' @ line '+e.lineno)}},true);
+window.addEventListener('unhandledrejection',function(e){ttmShow('Promise: '+((e.reason&&e.reason.message)||e.reason))});
+setTimeout(function(){if(!window.__ttmOk)ttmShow('App did not start. Check internet or open in Chrome.')},6000);
+</script>
+
 <style>
 :root{--bg:#030814;--bg2:#08183a;--card:rgba(10,30,70,.55);--tx:#eaf6ff;--mu:#8fb4d8;--ac:#27c8ff;--ac2:#1565ff;--bd:rgba(60,170,255,.35);--gl:rgba(39,200,255,.55);color-scheme:dark;box-sizing:border-box}
 :root[data-theme="light"]{--bg:#eef6ff;--bg2:#cfe6ff;--card:rgba(255,255,255,.8);--tx:#0a2342;--mu:#4a6a8c;--ac:#0a84ff;--ac2:#0047c8;--bd:rgba(10,100,220,.3);--gl:rgba(10,132,255,.35);color-scheme:light}
@@ -104,7 +111,7 @@ input:focus{border-color:var(--ac);box-shadow:0 0 0 3px var(--gl)}
 .n.bn{color:#ffc247;font-weight:600}.n.bn i{width:14px;height:14px;margin-left:-1px;border-color:#ffc247}.n.bn.on i{background:#ffc247;box-shadow:0 0 10px rgba(255,194,71,.5)}
 </style></head>
 <body>
-<div id="app"></div><div id="toast"></div>
+<div id="app"><p style="padding:40px;color:#8fb4d8;font-family:sans-serif">Loading Titanium (TTM)…</p></div><div id="toast"></div>
 <script type="module">
 import{initializeApp}from"https://www.gstatic.com/firebasejs/13.3.0/firebase-app.js";
 import{getAuth,onAuthStateChanged,sendSignInLinkToEmail,isSignInWithEmailLink,signInWithEmailLink,signOut}from"https://www.gstatic.com/firebasejs/13.3.0/firebase-auth.js";
@@ -155,10 +162,4 @@ function view(){clearInterval(tm);const d=D(),m=$('#m');
   <div class="card"><label>${t('addr')}</label><input id="a" value="${esc(d.addr)}" placeholder="0x..." autocomplete="off" autocapitalize="off"><button class="btn ghost" onclick="pa()">${t('save')}</button></div>
   <button class="btn" onclick="toast('${t('withdraw')}: coming soon')">${t('withdraw')}</button>`}
  else{m.innerHTML=`<h2>${t('settings')}</h2>
-  <div class="card"><label>${t('theme')}</label><div class="pill"><button class="${SET.theme=='dark'?'cur':''}" onclick="ss('theme','dark')">${t('dark')}</button><button class="${SET.theme=='light'?'cur':''}" onclick="ss('theme','light')">${t('light')}</button></div></div>
-  <div class="card"><label>${t('lang')}</label><div class="pill"><button class="${SET.lang=='en'?'cur':''}" onclick="ss('lang','en')">English</button><button class="${SET.lang=='hi'?'cur':''}" onclick="ss('lang','hi')">हिन्दी</button></div></div>
-  <button class="btn red" style="margin-top:40px" onclick="lo()">${t('logout')}</button>`}}
-function tick(){const e=$('#c');if(!e)return;const d=D(),dn=new Date().toDateString(),r=Date.now()-d.last,L=864e5,rdy=!d.last||r>=L;
- $('#st').textContent=d.total;sk(d);$('#sd').textContent=d.day==dn?d.today:0;
- e.classList.toggle('rdy',rdy);$('#rg').style.strokeDashoffset=rdy?0:590.6*(1-r/L);
- if(rdy){$('#ct')
+  <div class="card"><label>${t('theme')}</label><div class="pill"><button cla
