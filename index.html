@@ -6,9 +6,10 @@
 function ttmShow(t){var a=document.getElementById('app')||document.body;a.innerHTML='<pre style="color:#fff;background:#300;white-space:pre-wrap;word-break:break-all;padding:16px;margin:16px;border-radius:10px;font-size:13px">ERROR\n'+String(t).replace(/</g,'&lt;')+'</pre>'}
 window.addEventListener('error',function(e){if(e.target&&e.target!==window&&(e.target.src||e.target.href)){ttmShow('Could not load: '+(e.target.src||e.target.href))}else{ttmShow((e.message||'error')+' @ line '+e.lineno)}},true);
 window.addEventListener('unhandledrejection',function(e){ttmShow('Promise: '+((e.reason&&e.reason.message)||e.reason))});
-setTimeout(function(){if(!window.__ttmOk)ttmShow('App did not start. Check internet or open in Chrome.')},6000);
+setTimeout(function(){if(!window.__ttmOk)ttmShow('Slow internet: app has not loaded yet. Wait and refresh, or try Wi-Fi.')},60000);
 </script>
 
+<link rel="modulepreload" href="https://www.gstatic.com/firebasejs/13.3.0/firebase-app.js"><link rel="modulepreload" href="https://www.gstatic.com/firebasejs/13.3.0/firebase-auth.js"><link rel="modulepreload" href="https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore-lite.js">
 <style>
 :root{--bg:#030814;--bg2:#08183a;--card:rgba(10,30,70,.55);--tx:#eaf6ff;--mu:#8fb4d8;--ac:#27c8ff;--ac2:#1565ff;--bd:rgba(60,170,255,.35);--gl:rgba(39,200,255,.55);color-scheme:dark;box-sizing:border-box}
 :root[data-theme="light"]{--bg:#eef6ff;--bg2:#cfe6ff;--card:rgba(255,255,255,.8);--tx:#0a2342;--mu:#4a6a8c;--ac:#0a84ff;--ac2:#0047c8;--bd:rgba(10,100,220,.3);--gl:rgba(10,132,255,.35);color-scheme:light}
@@ -111,11 +112,11 @@ input:focus{border-color:var(--ac);box-shadow:0 0 0 3px var(--gl)}
 .n.bn{color:#ffc247;font-weight:600}.n.bn i{width:14px;height:14px;margin-left:-1px;border-color:#ffc247}.n.bn.on i{background:#ffc247;box-shadow:0 0 10px rgba(255,194,71,.5)}
 </style></head>
 <body>
-<div id="app"><p style="padding:40px;color:#8fb4d8;font-family:sans-serif">Loading Titanium (TTM)…</p></div><div id="toast"></div>
+<div id="app"><p style="padding:40px;color:#8fb4d8;font-family:sans-serif">Loading Titanium (TTM)…<br><small>Slow internet par 1 minute tak lag sakta hai</small></p></div><div id="toast"></div>
 <script type="module">
 import{initializeApp}from"https://www.gstatic.com/firebasejs/13.3.0/firebase-app.js";
 import{getAuth,onAuthStateChanged,sendSignInLinkToEmail,isSignInWithEmailLink,signInWithEmailLink,signOut}from"https://www.gstatic.com/firebasejs/13.3.0/firebase-auth.js";
-import{getFirestore,doc,getDoc,setDoc}from"https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js";
+import{getFirestore,doc,getDoc,setDoc}from"https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore-lite.js";
 const fbApp=initializeApp({apiKey:"AIzaSyA9UHfZreFJKSaUaWGl_sSQRh9B0MJS7ks",authDomain:"titanium-coin-5534a.firebaseapp.com",projectId:"titanium-coin-5534a",storageBucket:"titanium-coin-5534a.firebasestorage.app",messagingSenderId:"1098710504681",appId:"1:1098710504681:web:d143d02ab3ea7443fecc78"});
 const auth=getAuth(fbApp),db=getFirestore(fbApp);
 const T={en:{profile:"Profile",mining:"Mining",wallet:"Wallet",settings:"Settings",email:"Email",verified:"Verified",username:"Username",name:"Name",mobile:"Mobile number",save:"Save",add:"Add number",locked:"Locked — cannot be changed",tap:"TAP",days2:"days",sknote:"Mine every day. 7 days = +50 bonus, repeats every 7 days. Missing more than a day resets the streak.",total:"Total",today:"Today",pts:"points",addr:"Wallet address",withdraw:"Withdrawal",theme:"Theme",lang:"Language",dark:"Dark",light:"Light",logout:"Log out",sure:"Do you want to log out?",confirm:"Confirm",decline:"Decline",sendotp:"Send login link",verify:"Verify & Login",enter:"Enter your email",otp:"Enter 6-digit OTP",nextin:"Next tap in",days:"Change available in",saved:"Saved ✓",sent:"Login link sent to",sent2:"Open that email and tap the link to log in. Also check the Spam folder."},
@@ -159,7 +160,4 @@ function view(){clearInterval(tm);const d=D(),m=$('#m');
   <div class="stats"><div class="card stat"><small>${t('total')}</small><b id="st"></b></div><div class="card stat"><small>${t('today')}</small><b id="sd"></b></div></div></div>`;tick();tm=setInterval(tick,1000)}
  else if(page=='wallet'){
   m.innerHTML=`<h2>${t('wallet')}</h2><div class="card center"><small style="color:var(--mu)">${t('total')} ${t('pts')}</small><div class="big">${d.total}</div></div>
-  <div class="card"><label>${t('addr')}</label><input id="a" value="${esc(d.addr)}" placeholder="0x..." autocomplete="off" autocapitalize="off"><button class="btn ghost" onclick="pa()">${t('save')}</button></div>
-  <button class="btn" onclick="toast('${t('withdraw')}: coming soon')">${t('withdraw')}</button>`}
- else{m.innerHTML=`<h2>${t('settings')}</h2>
-  <div class="card"><label>${t('theme')}</label><div class="pill"><button cla
+  <div class="card"><label>${t('addr')}</label><input id="a" 
