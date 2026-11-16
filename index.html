@@ -83,7 +83,6 @@ input:focus{border-color:var(--ac);box-shadow:0 0 0 3px var(--gl)}
 .coin.rdy{animation:pu 2.8s ease-in-out infinite}
 @keyframes pu{50%{transform:scale(1.025)}}
 .coin .in{font-weight:600}.coin #ct{font-variant-numeric:tabular-nums;letter-spacing:.02em}
-Part 2 (baaki)
 .stat b{font-size:28px;font-weight:600;color:var(--tx);text-shadow:none;font-variant-numeric:tabular-nums}
 .stat small{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--mu)}
 .big{font-size:40px;font-weight:600;color:var(--tx);text-shadow:none;letter-spacing:-.03em}
@@ -93,6 +92,16 @@ Part 2 (baaki)
 .lock{color:var(--mu)}
 .modal{backdrop-filter:blur(6px)}
 #toast{border:1px solid var(--bd);background:rgba(15,22,40,.92);box-shadow:none;border-radius:14px;color:#f2f5fa}
+.mrow{display:flex;align-items:center;justify-content:center;gap:18px;width:100%;margin:8px 0 14px}.mrow .coin{margin:0;flex:none}
+.sk{width:86px;height:189px;flex:none;display:flex;flex-direction:column}
+.skh{font-size:26px;font-weight:600;line-height:1}.skh small{font-size:10px;letter-spacing:.1em;color:var(--mu);text-transform:uppercase;display:block;margin:3px 0 10px}
+.skl{flex:1;position:relative;display:flex;flex-direction:column;justify-content:space-between}
+.skl::before{content:"";position:absolute;left:5px;top:8px;bottom:8px;width:2px;background:var(--bd)}
+.skl b{position:absolute;left:5px;bottom:8px;width:2px;background:linear-gradient(0deg,var(--ac2),var(--ac));box-shadow:0 0 8px var(--gl)}
+.n{position:relative;display:flex;align-items:center;gap:10px;font-size:11px;color:var(--mu);height:16px}
+.n i{width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--bd);flex:none;z-index:1}
+.n.on{color:var(--tx)}.n.on i{background:var(--ac);border-color:var(--ac);box-shadow:0 0 8px var(--gl)}
+.n.bn{color:#ffc247;font-weight:600}.n.bn i{width:14px;height:14px;margin-left:-1px;border-color:#ffc247}.n.bn.on i{background:#ffc247;box-shadow:0 0 10px rgba(255,194,71,.5)}
 </style></head>
 <body>
 <div id="app"></div><div id="toast"></div>
@@ -102,8 +111,8 @@ import{getAuth,onAuthStateChanged,sendSignInLinkToEmail,isSignInWithEmailLink,si
 import{getFirestore,doc,getDoc,setDoc}from"https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js";
 const fbApp=initializeApp({apiKey:"AIzaSyA9UHfZreFJKSaUaWGl_sSQRh9B0MJS7ks",authDomain:"titanium-coin-5534a.firebaseapp.com",projectId:"titanium-coin-5534a",storageBucket:"titanium-coin-5534a.firebasestorage.app",messagingSenderId:"1098710504681",appId:"1:1098710504681:web:d143d02ab3ea7443fecc78"});
 const auth=getAuth(fbApp),db=getFirestore(fbApp);
-const T={en:{profile:"Profile",mining:"Mining",wallet:"Wallet",settings:"Settings",email:"Email",verified:"Verified",username:"Username",name:"Name",mobile:"Mobile number",save:"Save",add:"Add number",locked:"Locked — cannot be changed",tap:"TAP",total:"Total",today:"Today",pts:"points",addr:"Wallet address",withdraw:"Withdrawal",theme:"Theme",lang:"Language",dark:"Dark",light:"Light",logout:"Log out",sure:"Do you want to log out?",confirm:"Confirm",decline:"Decline",sendotp:"Send login link",verify:"Verify & Login",enter:"Enter your email",otp:"Enter 6-digit OTP",nextin:"Next tap in",days:"Change available in",saved:"Saved ✓",sent:"Login link sent to",sent2:"Open that email and tap the link to log in. Also check the Spam folder."},
-hi:{profile:"प्रोफ़ाइल",mining:"माइनिंग",wallet:"वॉलेट",settings:"सेटिंग्स",email:"ईमेल",verified:"वेरिफ़ाइड",username:"यूज़रनेम",name:"नाम",mobile:"मोबाइल नंबर",save:"सेव करें",add:"नंबर जोड़ें",locked:"लॉक — बदला नहीं जा सकता",tap:"टैप",total:"कुल",today:"आज",pts:"पॉइंट",addr:"वॉलेट एड्रेस",withdraw:"निकासी (Withdrawal)",theme:"थीम",lang:"भाषा",dark:"डार्क",light:"लाइट",logout:"लॉग आउट",sure:"क्या आप लॉग आउट करना चाहते हैं?",confirm:"कन्फ़र्म",decline:"डिक्लाइन",sendotp:"लॉगिन लिंक भेजें",verify:"वेरिफ़ाई और लॉगिन",enter:"अपना ईमेल दर्ज करें",otp:"6 अंकों का OTP डालें",nextin:"अगला टैप",days:"बदलाव उपलब्ध",saved:"सेव हो गया ✓",sent:"लॉगिन लिंक भेजा गया:",sent2:"ईमेल खोलकर लिंक पर टैप करें। Spam फ़ोल्डर भी देखें।"}};
+const T={en:{profile:"Profile",mining:"Mining",wallet:"Wallet",settings:"Settings",email:"Email",verified:"Verified",username:"Username",name:"Name",mobile:"Mobile number",save:"Save",add:"Add number",locked:"Locked — cannot be changed",tap:"TAP",days2:"days",sknote:"Mine every day. 7 days = +50 bonus, repeats every 7 days. Missing more than a day resets the streak.",total:"Total",today:"Today",pts:"points",addr:"Wallet address",withdraw:"Withdrawal",theme:"Theme",lang:"Language",dark:"Dark",light:"Light",logout:"Log out",sure:"Do you want to log out?",confirm:"Confirm",decline:"Decline",sendotp:"Send login link",verify:"Verify & Login",enter:"Enter your email",otp:"Enter 6-digit OTP",nextin:"Next tap in",days:"Change available in",saved:"Saved ✓",sent:"Login link sent to",sent2:"Open that email and tap the link to log in. Also check the Spam folder."},
+hi:{profile:"प्रोफ़ाइल",mining:"माइनिंग",wallet:"वॉलेट",settings:"सेटिंग्स",email:"ईमेल",verified:"वेरिफ़ाइड",username:"यूज़रनेम",name:"नाम",mobile:"मोबाइल नंबर",save:"सेव करें",add:"नंबर जोड़ें",locked:"लॉक — बदला नहीं जा सकता",tap:"टैप",days2:"दिन",sknote:"हर दिन माइनिंग करें। 7 दिन पर +50 बोनस, हर 7 दिन दोहराता है। एक दिन से ज़्यादा छूटने पर स्ट्रीक रीसेट।",total:"कुल",today:"आज",pts:"पॉइंट",addr:"वॉलेट एड्रेस",withdraw:"निकासी (Withdrawal)",theme:"थीम",lang:"भाषा",dark:"डार्क",light:"लाइट",logout:"लॉग आउट",sure:"क्या आप लॉग आउट करना चाहते हैं?",confirm:"कन्फ़र्म",decline:"डिक्लाइन",sendotp:"लॉगिन लिंक भेजें",verify:"वेरिफ़ाई और लॉगिन",enter:"अपना ईमेल दर्ज करें",otp:"6 अंकों का OTP डालें",nextin:"अगला टैप",days:"बदलाव उपलब्ध",saved:"सेव हो गया ✓",sent:"लॉगिन लिंक भेजा गया:",sent2:"ईमेल खोलकर लिंक पर टैप करें। Spam फ़ोल्डर भी देखें।"}};
 const $=s=>document.querySelector(s);
 const g=(k,d)=>{try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}};
 const s=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
@@ -111,7 +120,7 @@ let SET=g('ttm_set',{theme:'dark',lang:'en'}),me=null,page='mining',pend=null,ot
 const t=k=>(T[SET.lang]||T.en)[k]||k;
 const esc=x=>String(x==null?'':x).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 let DC=null,UID=null;
-const BASE={user:'',name:'',nameAt:0,mob:'',addr:'',total:0,today:0,day:'',last:0};
+const BASE={user:'',name:'',nameAt:0,mob:'',addr:'',total:0,today:0,day:'',last:0,streak:0};
 const D=()=>Object.assign({},BASE,DC||{});
 async function loadDoc(){const r=await getDoc(doc(db,'users',UID));if(r.exists())DC=r.data();else{DC={...BASE,email:me};await setDoc(doc(db,'users',UID),DC)}}
 const sv=d=>{DC={...d,email:me};setDoc(doc(db,'users',UID),DC).catch(async e=>{toast('Save failed: '+(e.code||'error'));try{await loadDoc();view()}catch(x){}})};
@@ -139,7 +148,7 @@ function view(){clearInterval(tm);const d=D(),m=$('#m');
   <div class="card"><label>${t('name')}</label><input id="n" value="${esc(d.name)}" maxlength="30" ${w?'disabled':''}>${w?`<div class="note">${t('days')} ${left}d</div>`:`<button class="btn" onclick="pn()">${t('save')}</button>`}</div>
   <div class="card"><label>${t('mobile')}</label>${d.mob?`<input value="${esc(d.mob)}" disabled><div class="note lock">${t('locked')}</div>`:`<input id="mb" type="tel" inputmode="tel" placeholder="+91 9XXXXXXXXX"><button class="btn" onclick="pm()">${t('add')}</button>`}</div>`}
  else if(page=='mining'){
-  m.innerHTML=`<div class="center"><h2>${t('mining')}</h2><div class="coin" id="c" onclick="mine()"><svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="94" fill="#06163a" stroke="#1565ff" stroke-opacity=".35" stroke-width="6"/><circle id="rg" cx="100" cy="100" r="94" fill="none" stroke="#27c8ff" stroke-width="6" stroke-linecap="round" transform="rotate(-90 100 100)" stroke-dasharray="590.6" stroke-dashoffset="0"/><circle cx="100" cy="100" r="80" fill="none" stroke="#27c8ff" stroke-opacity=".4" stroke-dasharray="4 8"/></svg><div class="in"><div id="ct" style="font-size:30px"></div><small id="cs"></small></div></div>
+  m.innerHTML=`<div class="center"><h2>${t('mining')}</h2><div class="mrow"><div class="coin" id="c" onclick="mine()"><svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="94" fill="#06163a" stroke="#1565ff" stroke-opacity=".35" stroke-width="6"/><circle id="rg" cx="100" cy="100" r="94" fill="none" stroke="#27c8ff" stroke-width="6" stroke-linecap="round" transform="rotate(-90 100 100)" stroke-dasharray="590.6" stroke-dashoffset="0"/><circle cx="100" cy="100" r="80" fill="none" stroke="#27c8ff" stroke-opacity=".4" stroke-dasharray="4 8"/></svg><div class="in"><div id="ct" style="font-size:30px"></div><small id="cs"></small></div></div><div class="sk" id="sk"></div></div><div class="note" style="text-align:center;margin:0 0 16px">${t('sknote')}</div>
   <div class="stats"><div class="card stat"><small>${t('total')}</small><b id="st"></b></div><div class="card stat"><small>${t('today')}</small><b id="sd"></b></div></div></div>`;tick();tm=setInterval(tick,1000)}
  else if(page=='wallet'){
   m.innerHTML=`<h2>${t('wallet')}</h2><div class="card center"><small style="color:var(--mu)">${t('total')} ${t('pts')}</small><div class="big">${d.total}</div></div>
@@ -150,15 +159,6 @@ function view(){clearInterval(tm);const d=D(),m=$('#m');
   <div class="card"><label>${t('lang')}</label><div class="pill"><button class="${SET.lang=='en'?'cur':''}" onclick="ss('lang','en')">English</button><button class="${SET.lang=='hi'?'cur':''}" onclick="ss('lang','hi')">हिन्दी</button></div></div>
   <button class="btn red" style="margin-top:40px" onclick="lo()">${t('logout')}</button>`}}
 function tick(){const e=$('#c');if(!e)return;const d=D(),dn=new Date().toDateString(),r=Date.now()-d.last,L=864e5,rdy=!d.last||r>=L;
- $('#st').textContent=d.total;$('#sd').textContent=d.day==dn?d.today:0;
+ $('#st').textContent=d.total;sk(d);$('#sd').textContent=d.day==dn?d.today:0;
  e.classList.toggle('rdy',rdy);$('#rg').style.strokeDashoffset=rdy?0:590.6*(1-r/L);
- if(rdy){$('#ct').textContent=t('tap');$('#cs').textContent='+10 '+t('pts')}else{const q=L-r,p=n=>String(n).padStart(2,'0');$('#ct').textContent=p(Math.floor(q/36e5))+':'+p(Math.floor(q/6e4)%60)+':'+p(Math.floor(q/1e3)%60);$('#cs').textContent=t('nextin')}}
-function mine(){const d=D(),dn=new Date().toDateString();if(d.last&&Date.now()-d.last<864e5)return;if(d.day!=dn){d.day=dn;d.today=0}d.today+=10;d.total+=10;d.last=Date.now();sv(d);tick();toast('+10 '+t('pts'))}
-function pu(){const v=$('#u').value.trim().replace(/^@/,'');if(v.length<3)return toast('Min 3 characters');const d=D();d.user=v;sv(d);view();toast(t('saved'))}
-function pn(){const v=$('#n').value.trim();if(!v)return;const d=D();d.name=v;d.nameAt=Date.now();sv(d);view();toast(t('saved'))}
-function pm(){const v=$('#mb').value.trim();if(!/^\+?\d{8,15}$/.test(v.replace(/[\s-]/g,'')))return toast('Invalid number');const d=D();d.mob=v;sv(d);view();toast(t('saved'))}
-function pa(){const d=D();d.addr=$('#a').value.trim();sv(d);toast(t('saved'))}
-function ss(k,v){SET[k]=v;s('ttm_set',SET);theme();shell()}
-function lo(){const o=document.createElement('div');o.className='modal';o.innerHTML=`<div class="card"><p style="font-size:17px">${t('sure')}</p><button class="btn red" id="y">${t('confirm')}</button><button class="btn ghost" id="n2">${t('decline')}</button></div>`;document.body.appendChild(o);
- $('#n2').onclick=()=>o.remove();$('#y').onclick=()=>{o.remove();pend=null;signOut(auth)}}
-function logo(w){let c='';const h=[12,20,28,38,50];for(let i=0;i<5;i++){c+=`<rect x="${84+i*17}" y="${70-h[i]}" width="9" height="${h[i]}" rx="4.5" fil
+ if(rdy){$('#ct')
