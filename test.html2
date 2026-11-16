@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<body style="background:#111;color:#fff;font:14px sans-serif;padding:12px">
+<h3>Titanium test 2</h3>
+<pre id="o" style="white-space:pre-wrap;word-break:break-all;color:#7f7"></pre>
+<hr>
+<div id="app"></div>
+<script>
+const o=document.getElementById('o');
+const log=t=>o.textContent+=t+'\n';
+addEventListener('error',e=>log('ERR: '+e.message+' line '+e.lineno),true);
+addEventListener('unhandledrejection',e=>log('REJ: '+(e.reason&&e.reason.stack||e.reason)));
+(async()=>{
+try{
+const t=await(await fetch('index.html?'+Date.now())).text();
+log('index.html size: '+t.length);
+const m=t.match(/<script type="module">([\s\S]*?)<\/script>/);
+if(!m){log('NO MODULE SCRIPT FOUND');return}
+const u=URL.createObjectURL(new Blob([m[1]],{type:'text/javascript'}));
+await import(u);
+log('MODULE LOADED OK');
+}catch(e){log('MODULE FAIL: '+e.message+'\n'+(e.stack||''))}
+setTimeout(()=>log('app html length: '+document.getElementById('app').innerHTML.length),3000);
+})();
+              </script>
